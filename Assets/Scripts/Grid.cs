@@ -68,6 +68,12 @@ public class Grid : MonoBehaviour {
 
     public Cell GetNextCellHorizontal(int h, Cell curCell)
     {
+
+        if(cell == null)
+        {
+            return null;
+        }
+
         // get cell to right of current cell
         int i = curCell.GetCellIndexX();
         int j = curCell.GetCellIndexY();
@@ -77,7 +83,7 @@ public class Grid : MonoBehaviour {
             // check if there exists a cell to the right of current cell, if not return current cell
             if(i == gridX-1)
             {
-                return curCell;
+                return null;
             }
             else
             {
@@ -88,7 +94,7 @@ public class Grid : MonoBehaviour {
         {
             if(i == 0)
             {
-                return curCell;
+                return null;
             }
             else
             {
@@ -97,12 +103,46 @@ public class Grid : MonoBehaviour {
         }
         else
         {
+            return null;
+        }
+    }
+
+    //Slightly modified version to return current cell whenever the actual funciton returns null
+    public Cell GetNextCellHorizontalMove(int h, Cell curCell)
+    {
+        Cell newCell = GetNextCellHorizontal(h, curCell);
+
+        if(newCell == null)
+        {
             return curCell;
+        }
+        else
+        {
+            return newCell;
+        }
+    }
+
+    public Cell GetNextCellVerticalMove(int h, Cell curCell)
+    {
+        Cell newCell = GetNextCellVertical(h, curCell);
+
+        if (newCell == null)
+        {
+            return curCell;
+        }
+        else
+        {
+            return newCell;
         }
     }
 
     public Cell GetNextCellVertical(int v, Cell curCell)
     {
+        if(curCell == null)
+        {
+            return  null;
+        }
+
         // get cell to right of current cell
         int i = curCell.GetCellIndexX();
         int j = curCell.GetCellIndexY();
@@ -111,7 +151,7 @@ public class Grid : MonoBehaviour {
         {
             if (j == gridY - 1)
             {
-                return curCell;
+                return null;
             }
             else
             {
@@ -122,7 +162,7 @@ public class Grid : MonoBehaviour {
         {
             if (j == 0)
             {
-                return curCell;
+                return null;
             }
             else
             {
@@ -131,7 +171,7 @@ public class Grid : MonoBehaviour {
         }
         else
         {
-            return curCell;
+            return null;
         }
     }
 
@@ -152,9 +192,12 @@ public class Grid : MonoBehaviour {
             return grid[i, j];
         }
     }
-
     public void HighlightCell(Cell cell)
     {
+        if(cell == null)
+        {
+            return;
+        }
         if (cell != currentHighlightedCell)
         {     
             if(currentHighlightedCell != null)

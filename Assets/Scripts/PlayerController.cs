@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         HandlePlayerInput();
-        UpdateMousePosition();
+        CellRelativeToPlayerHighlighting();    
     }
 
     private void HandlePlayerInput()
@@ -43,23 +43,12 @@ public class PlayerController : MonoBehaviour {
 
             if (x == 0)
             {
-                SetPosition(grid.GetNextCellVertical((int)y, currentCell));
+                SetPosition(grid.GetNextCellVerticalMove((int)y, currentCell));
             }
             else if (y == 0)
             {
-                SetPosition(grid.GetNextCellHorizontal((int)x, currentCell));
+                SetPosition(grid.GetNextCellHorizontalMove((int)x, currentCell));
             }
-        }
-    }
-
-    private void UpdateMousePosition()
-    {
-        Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Cell selectedCell = grid.GetCellAtWorldPosition(point);
-
-        if(selectedCell != null)
-        {
-            grid.HighlightCell(selectedCell);
         }
     }
 
@@ -73,4 +62,52 @@ public class PlayerController : MonoBehaviour {
     {
         SetPosition(grid.GetRandomCell());
     }
+
+    private void CellRelativeToPlayerHighlighting()
+    {
+        Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // determine where is the point is relative to player
+
+        // get angle between vector(point to player) and x axis
+        Vector2 disp = point - transform.position;
+        float angle = Vector2.SignedAngle(disp, Vector3.left);
+
+        // right - 135 to 180 and -180 to -135
+        // top  - 45 to 135
+        // left - -45 to 45
+        // bottom - -135 to -45
+
+        if(angle >= 45 && angle < 135)
+        {
+            // top
+            grid.HighlightCell(grid.GetNextCellVertical(1, currentCell));
+        }
+        else if(angle >= -45 && angle < 45)
+        {
+            // left
+            grid.HighlightCell(grid.GetNextCellHorizontal(-1, currentCell));
+        }
+        else if(angle >= -135 && angle < -45)
+        {
+            // bottom
+            grid.HighlightCell(grid.GetNextCellVertical(-1, currentCell));
+        }
+        else
+        {
+            // right
+            grid.HighlightCell(grid.GetNextCellHorizontal(1, currentCell));
+        }
+    }
+
+    /*private void UpdateMousePosition()
+{
+    Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    Cell selectedCell = grid.GetCellAtWorldPosition(point);
+
+    if(selectedCell != null)
+    {
+        grid.HighlightCell(selectedCell);
+    }
+} */
 }
