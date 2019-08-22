@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         HandlePlayerInput();
+        UpdateMousePosition();
     }
 
     private void HandlePlayerInput()
@@ -48,6 +49,17 @@ public class PlayerController : MonoBehaviour {
             {
                 SetPosition(grid.GetNextCellHorizontal((int)x, currentCell));
             }
+        }
+    }
+
+    private void UpdateMousePosition()
+    {
+        Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Cell selectedCell = grid.GetCellAtWorldPosition(point);
+
+        if(selectedCell != null)
+        {
+            grid.HighlightCell(selectedCell);
         }
     }
 

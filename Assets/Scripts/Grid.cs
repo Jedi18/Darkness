@@ -14,24 +14,26 @@ public class Grid : MonoBehaviour {
     private Cell[,] grid;
 
     public GameObject cell;
+    public Color highlitedCellColor;
+    public Color originalCellColor;
 
     public float shiftLeft;
     public float shiftBottom;
 
+    private GameObject[,] cells;
+    Cell currentHighlightedCell;
+
 	// Use this for initialization
 	void Start () {
         grid = new Cell[gridX,gridY];
+        cells = new GameObject[gridX, gridY];
         shiftLeft = (gridX*cellWidth) / 2;
         shiftBottom = (gridY*cellHeight) / 2;
+        currentHighlightedCell = null;
 
         InstantiateCells();
         DrawCells();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     private void InstantiateCells()
     {
@@ -51,7 +53,7 @@ public class Grid : MonoBehaviour {
             for(int y=0;y<gridY;y++)
             {
                 Vector3 pos = grid[x, y].getCenterPosition();
-                Instantiate(cell, pos, Quaternion.identity);
+                cells[x,y] = Instantiate(cell, pos, Quaternion.identity);
             }
         }
     }
@@ -130,6 +132,40 @@ public class Grid : MonoBehaviour {
         else
         {
             return curCell;
+        }
+    }
+
+    // returns cell at given position, else returns null
+    public Cell GetCellAtWorldPosition (Vector3 coord)
+    {
+        // add shift left and bottom to account for subtraction done earlier 
+
+        int i = (int)Mathf.Floor((coord.x + shiftLeft) / cellWidth);
+        int j = (int)Mathf.Floor((coord.y + shiftBottom) / cellHeight);
+
+        if (i >= gridX || j >= gridY || i < 0 || j < 0)
+        {
+            return null;
+        }
+        else
+        {
+            return grid[i, j];
+        }
+    }
+
+    public void HighlightCell(Cell cell)
+    {
+        if (cell != currentHighlightedCell)
+        {     
+            if(currentHighlightedCell != null)
+            {
+                Renderer oldCellRenderer = cells[currentHighlightedCell.GetCellIndexX(), currentHighlightedCell.GetCellIndexY()].GetComponent<Renderer>();
+                oldCellRenderer.material.color = originalCellColor;
+            }
+
+            currentHighlightedCell = cell;
+            Renderer cellRenderer = cells[cell.GetCellIndexX(), cell.GetCellIndexY()].GetComponent<Renderer>();
+            cellRenderer.material.color = highlitedCellColor;
         }
     }
 }
