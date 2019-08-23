@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         HandlePlayerInput();
-        CellRelativeToPlayerHighlighting();    
+        CellRelativeToPlayerHighlighting();
     }
 
     private void HandlePlayerInput()
@@ -54,8 +54,12 @@ public class PlayerController : MonoBehaviour {
 
     private void SetPosition(Cell cell)
     {
+        LightOrDarkenSurroundingCells(false);
         currentCell = cell;
-        gameObject.transform.position = currentCell.getCenterPosition();
+        Vector3 cellPosition = currentCell.getCenterPosition();
+        // transform.position.z must be negative for it to properly render above the cells
+        gameObject.transform.position = new Vector3(cellPosition.x, cellPosition.y, gameObject.transform.position.z);
+        LightOrDarkenSurroundingCells(true);
     }
 
     private void spawnAtRandomPositions()
@@ -100,6 +104,29 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void LightOrDarkenSurroundingCells(bool light)
+    {
+        if(currentCell != null)
+        {
+            GameObject[] gameObjects = grid.GetNearbyGameObjectOfCell(currentCell);
+
+            for(int i=0;i<gameObjects.Length;i++)
+            {
+                if (gameObjects[i] != null)
+                {
+                    if(light)
+                    {
+                        gameObjects[i].layer = LayerMask.NameToLayer(grid.lightedCell);
+                    }
+                    else
+                    {
+                        gameObjects[i].layer = LayerMask.NameToLayer(grid.unlightedCell);
+                    }
+                }
+            }
+        }
+
+    }
     /*private void UpdateMousePosition()
 {
     Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);

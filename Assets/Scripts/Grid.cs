@@ -14,14 +14,17 @@ public class Grid : MonoBehaviour {
     private Cell[,] grid;
 
     public GameObject cell;
-    public Color highlitedCellColor;
-    public Color originalCellColor;
+    public Material highlitedCellMaterial;
+    public Material originalCellMaterial;
 
     public float shiftLeft;
     public float shiftBottom;
 
     private GameObject[,] cells;
     Cell currentHighlightedCell;
+
+    public string unlightedCell;
+    public string lightedCell;
 
 	// Use this for initialization
 	void Start () {
@@ -54,6 +57,7 @@ public class Grid : MonoBehaviour {
             {
                 Vector3 pos = grid[x, y].getCenterPosition();
                 cells[x,y] = Instantiate(cell, pos, Quaternion.identity);
+                //cells[x, y].GetComponent<Renderer>().enabled = false;
             }
         }
     }
@@ -203,12 +207,50 @@ public class Grid : MonoBehaviour {
             if(currentHighlightedCell != null)
             {
                 Renderer oldCellRenderer = cells[currentHighlightedCell.GetCellIndexX(), currentHighlightedCell.GetCellIndexY()].GetComponent<Renderer>();
-                oldCellRenderer.material.color = originalCellColor;
+                oldCellRenderer.material = originalCellMaterial;
             }
 
             currentHighlightedCell = cell;
             Renderer cellRenderer = cells[cell.GetCellIndexX(), cell.GetCellIndexY()].GetComponent<Renderer>();
-            cellRenderer.material.color = highlitedCellColor;
+            cellRenderer.material = highlitedCellMaterial;
         }
+    }
+
+    public GameObject GetGameObjectAtCell(Cell cell_in)
+    {
+        if (cell_in == null)
+        {
+            return null;
+        }
+        return cells[cell_in.GetCellIndexX(), cell_in.GetCellIndexY()];
+    }
+
+    public GameObject[] GetNearbyGameObjectOfCell(Cell cell_in)
+    {
+        if (cell_in == null)
+        {
+            return null;
+        }
+
+        GameObject[] gameObjects = new GameObject[9];
+
+        int cell_x = cell_in.GetCellIndexX();
+        int cell_y = cell_in.GetCellIndexY();
+
+        int o = 0;
+
+        for(int i=cell_x-1; i <= cell_x+1; i++)
+        {
+            for(int j=cell_y-1; j <= cell_y+1; j++)
+            {
+                if((i>=0   && i <  gridX) && (j>=0 &&j  < gridY))
+                {
+                    gameObjects[o] = cells[i, j];
+                }
+                o++;
+            }
+        }
+
+        return gameObjects;
     }
 }
