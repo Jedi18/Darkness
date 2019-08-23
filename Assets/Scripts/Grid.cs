@@ -69,7 +69,7 @@ public class Grid : MonoBehaviour {
     public Cell GetNextCellHorizontal(int h, Cell curCell)
     {
 
-        if(cell == null)
+        if(curCell == null)
         {
             return null;
         }
