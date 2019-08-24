@@ -84,11 +84,15 @@ public class PlayerController : MonoBehaviour {
     private void SetPosition(Cell cell)
     {
         LightOrDarkenCurrentCell(false);
+        RenderNearbyEntities(false);
+
         currentCell = cell;
         Vector3 cellPosition = currentCell.getCenterPosition();
         // transform.position.z must be negative for it to properly render above the cells
         Vector3 newPosition = new Vector3(cellPosition.x, cellPosition.y, gameObject.transform.position.z);
         StartCoroutine(MovePlayer(transform.position, newPosition, playerMoveTime));
+
+        RenderNearbyEntities(true);
         LightOrDarkenCurrentCell(true);
     }
 
@@ -165,7 +169,25 @@ public class PlayerController : MonoBehaviour {
 
     public void RenderNearbyEntities(bool render_on)
     {
+        if(currentCell != null)
+        {
+            ICellEntity[] entities = entityManager.GetNearbyCellEntities(currentCell);
 
+            for (int i = 0; i < entities.Length; i++)
+            {
+                if (entities[i] != null)
+                {
+                    if (render_on)
+                    {
+                        entities[i].gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+                    else
+                    {
+                        entities[i].gameObject.GetComponent<Renderer>().enabled = false;
+                    }
+                }
+            }
+        }
     }
 
     /*public void LightOrDarkenSurroundingCells(bool light)

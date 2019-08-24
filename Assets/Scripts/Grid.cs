@@ -237,6 +237,35 @@ public class Grid : MonoBehaviour {
         return cells[cell_in.GetCellIndexX(), cell_in.GetCellIndexY()];
     }
 
+    public Cell[] GetNearbyCells(Cell cell_in)
+    {
+        if (cell_in == null)
+        {
+            return null;
+        }
+
+        Cell[]  cells_out = new Cell[9];
+
+        int cell_x = cell_in.GetCellIndexX();
+        int cell_y = cell_in.GetCellIndexY();
+
+        int o = 0;
+
+        for (int i = cell_x - 1; i <= cell_x + 1; i++)
+        {
+            for (int j = cell_y - 1; j <= cell_y + 1; j++)
+            {
+                if ((i >= 0 && i < gridX) && (j >= 0 && j < gridY))
+                {
+                    cells_out[o] = grid[i, j];
+                }
+                o++;
+            }
+        }
+
+        return cells_out;
+    }
+
     public GameObject[] GetNearbyGameObjectOfCell(Cell cell_in)
     {
         if (cell_in == null)

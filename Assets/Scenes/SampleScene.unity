@@ -289,6 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 1905185031973376, guid: 6b60eda00e7b5904fbfec18cdedb40e5, type: 2}
+  grid: {fileID: 479809129}
 --- !u!114 &479809129
 MonoBehaviour:
   m_ObjectHideFlags: 0

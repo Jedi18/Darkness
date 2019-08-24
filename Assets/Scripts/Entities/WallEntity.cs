@@ -9,10 +9,9 @@ public class WallEntity : ICellEntity
 
     public GameObject gameObject { get; set; }
 
-    public WallEntity(Cell cell_in, GameObject pref)
+    public WallEntity(Cell cell_in)
     {
         Cell = cell_in;
-        gameObject = pref;
     }
 
     public bool ExecuteAction()

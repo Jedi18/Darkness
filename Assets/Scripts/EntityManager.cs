@@ -7,6 +7,7 @@ public class EntityManager : MonoBehaviour {
     // Use this for initialization
     public ICellEntity[,] entities;
     public GameObject[] prefabs;
+    public Grid grid;
 
 	void Start () {
 		
@@ -24,6 +25,11 @@ public class EntityManager : MonoBehaviour {
 
     public bool HasEntity(Cell cell)
     {
+        if(cell == null)
+        {
+            return false;
+        }
+
         return !(entities[cell.GetCellIndexX(), cell.GetCellIndexY()] == null);
     }
 
@@ -35,8 +41,37 @@ public class EntityManager : MonoBehaviour {
 
     public void AddWallEntity(Cell cell)
     {
-        ICellEntity ent = new WallEntity(cell, prefabs[0]);
+        ICellEntity ent = new WallEntity(cell);
         entities[cell.GetCellIndexX(), cell.GetCellIndexY()] = ent;
-        Instantiate(ent.gameObject, new Vector3(cell.getCenterPosition().x, cell.getCenterPosition().y, -2), Quaternion.identity);
+        GameObject go = Instantiate(prefabs[0], new Vector3(cell.getCenterPosition().x, cell.getCenterPosition().y, -2), Quaternion.identity);
+        ent.gameObject = go;
+    }
+
+    public ICellEntity[] GetNearbyCellEntities(Cell cell)
+    {
+        if(cell == null)
+        {
+            return null;
+        }
+
+        Cell[] cells = grid.GetNearbyCells(cell);
+        ICellEntity[] nearbyEntities = new ICellEntity[9];
+
+        int o = 0;
+
+        for(int i=0;i<cells.Length;i++)
+        {
+            if(cells[i] != null)
+            {
+                if (HasEntity(cells[i]))
+                {
+                    nearbyEntities[o] = GetEntity(cells[i]);
+                }
+            }
+
+            o++;
+        }
+
+        return nearbyEntities;
     }
 }
