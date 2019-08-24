@@ -84,7 +84,6 @@ public class PlayerController : MonoBehaviour {
     private void SetPosition(Cell cell)
     {
         LightOrDarkenCurrentCell(false);
-        RenderNearbyEntities(false);
 
         currentCell = cell;
         Vector3 cellPosition = currentCell.getCenterPosition();
@@ -92,7 +91,6 @@ public class PlayerController : MonoBehaviour {
         Vector3 newPosition = new Vector3(cellPosition.x, cellPosition.y, gameObject.transform.position.z);
         StartCoroutine(MovePlayer(transform.position, newPosition, playerMoveTime));
 
-        RenderNearbyEntities(true);
         LightOrDarkenCurrentCell(true);
     }
 
@@ -116,6 +114,8 @@ public class PlayerController : MonoBehaviour {
         // left - -45 to 45
         // bottom - -135 to -45
 
+        RenderHighlightedEntity(false);
+
         if(angle >= 45 && angle < 135)
         {
             // top
@@ -136,6 +136,8 @@ public class PlayerController : MonoBehaviour {
             // right
             grid.HighlightCell(grid.GetNextCellHorizontal(1, currentCell), currentCell, highlightCellLight);
         }
+
+        RenderHighlightedEntity(true);
     }
 
     public void LightOrDarkenCurrentCell(bool light)
@@ -167,6 +169,7 @@ public class PlayerController : MonoBehaviour {
         transform.position = destination;
     }
 
+    // Redudant code, not used now
     public void RenderNearbyEntities(bool render_on)
     {
         if(currentCell != null)
@@ -186,6 +189,23 @@ public class PlayerController : MonoBehaviour {
                         entities[i].gameObject.GetComponent<Renderer>().enabled = false;
                     }
                 }
+            }
+        }
+    }
+
+    public void RenderHighlightedEntity(bool render_on)
+    {
+        if(grid.currentHighlightedCell != null && entityManager.HasEntity(grid.currentHighlightedCell))
+        {
+            ICellEntity cellEntity = entityManager.GetEntity(grid.currentHighlightedCell);
+
+            if (render_on)
+            {
+                cellEntity.gameObject.GetComponent<Renderer>().enabled = true;
+            }
+            else
+            {
+                cellEntity.gameObject.GetComponent<Renderer>().enabled = false;
             }
         }
     }

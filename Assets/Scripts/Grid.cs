@@ -23,7 +23,7 @@ public class Grid : MonoBehaviour {
     public float shiftBottom;
 
     private GameObject[,] cells;
-    Cell currentHighlightedCell;
+    public Cell currentHighlightedCell;
 
     public string unlightedCell;
     public string lightedCell;
