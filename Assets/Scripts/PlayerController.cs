@@ -54,12 +54,12 @@ public class PlayerController : MonoBehaviour {
 
     private void SetPosition(Cell cell)
     {
-        LightOrDarkenSurroundingCells(false);
+        LightOrDarkenCurrentCell(false);
         currentCell = cell;
         Vector3 cellPosition = currentCell.getCenterPosition();
         // transform.position.z must be negative for it to properly render above the cells
         gameObject.transform.position = new Vector3(cellPosition.x, cellPosition.y, gameObject.transform.position.z);
-        LightOrDarkenSurroundingCells(true);
+        LightOrDarkenCurrentCell(true);
     }
 
     private void spawnAtRandomPositions()
@@ -85,26 +85,42 @@ public class PlayerController : MonoBehaviour {
         if(angle >= 45 && angle < 135)
         {
             // top
-            grid.HighlightCell(grid.GetNextCellVertical(1, currentCell));
+            grid.HighlightCell(grid.GetNextCellVertical(1, currentCell), currentCell);
         }
         else if(angle >= -45 && angle < 45)
         {
             // left
-            grid.HighlightCell(grid.GetNextCellHorizontal(-1, currentCell));
+            grid.HighlightCell(grid.GetNextCellHorizontal(-1, currentCell), currentCell);
         }
         else if(angle >= -135 && angle < -45)
         {
             // bottom
-            grid.HighlightCell(grid.GetNextCellVertical(-1, currentCell));
+            grid.HighlightCell(grid.GetNextCellVertical(-1, currentCell), currentCell);
         }
         else
         {
             // right
-            grid.HighlightCell(grid.GetNextCellHorizontal(1, currentCell));
+            grid.HighlightCell(grid.GetNextCellHorizontal(1, currentCell), currentCell);
         }
     }
 
-    public void LightOrDarkenSurroundingCells(bool light)
+    public void LightOrDarkenCurrentCell(bool light)
+    {
+        if(currentCell != null)
+        {
+            if(light)
+            {
+                grid.GetGameObjectAtCell(currentCell).layer = LayerMask.NameToLayer(grid.lightedCell);
+            }
+            else
+            {
+                grid.GetGameObjectAtCell(currentCell).layer = LayerMask.NameToLayer(grid.unlightedCell);
+            }
+        }
+
+    }
+
+    /*public void LightOrDarkenSurroundingCells(bool light)
     {
         if(currentCell != null)
         {
@@ -126,7 +142,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-    }
+    } */
     /*private void UpdateMousePosition()
 {
     Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);

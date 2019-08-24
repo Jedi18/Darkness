@@ -14,8 +14,6 @@ public class Grid : MonoBehaviour {
     private Cell[,] grid;
 
     public GameObject cell;
-    public Material highlitedCellMaterial;
-    public Material originalCellMaterial;
 
     public float shiftLeft;
     public float shiftBottom;
@@ -196,7 +194,7 @@ public class Grid : MonoBehaviour {
             return grid[i, j];
         }
     }
-    public void HighlightCell(Cell cell)
+    public void HighlightCell(Cell cell, Cell currentPlayerCell)
     {
         if(cell == null)
         {
@@ -206,13 +204,16 @@ public class Grid : MonoBehaviour {
         {     
             if(currentHighlightedCell != null)
             {
-                Renderer oldCellRenderer = cells[currentHighlightedCell.GetCellIndexX(), currentHighlightedCell.GetCellIndexY()].GetComponent<Renderer>();
-                oldCellRenderer.material = originalCellMaterial;
+                // check if currentHighlightedCell is not player's current cell
+                // this is to addresss the bug that comes up when the player moves into a highlighted cell
+                if(currentHighlightedCell != currentPlayerCell)
+                {
+                    cells[currentHighlightedCell.GetCellIndexX(), currentHighlightedCell.GetCellIndexY()].layer = LayerMask.NameToLayer(unlightedCell);
+                }
             }
 
             currentHighlightedCell = cell;
-            Renderer cellRenderer = cells[cell.GetCellIndexX(), cell.GetCellIndexY()].GetComponent<Renderer>();
-            cellRenderer.material = highlitedCellMaterial;
+            cells[currentHighlightedCell.GetCellIndexX(), currentHighlightedCell.GetCellIndexY()].layer = LayerMask.NameToLayer(lightedCell);
         }
     }
 
