@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour {
 
     public float playerMoveTime;
 
+    public Light highlightCellLight;
+
 	// Use this for initialization
 	void Start () {
         //InvokeRepeating("spawnAtRandomPositions", 0.2f, 0.5f);
@@ -88,22 +90,22 @@ public class PlayerController : MonoBehaviour {
         if(angle >= 45 && angle < 135)
         {
             // top
-            grid.HighlightCell(grid.GetNextCellVertical(1, currentCell), currentCell);
+            grid.HighlightCell(grid.GetNextCellVertical(1, currentCell), currentCell, highlightCellLight);
         }
         else if(angle >= -45 && angle < 45)
         {
             // left
-            grid.HighlightCell(grid.GetNextCellHorizontal(-1, currentCell), currentCell);
+            grid.HighlightCell(grid.GetNextCellHorizontal(-1, currentCell), currentCell, highlightCellLight);
         }
         else if(angle >= -135 && angle < -45)
         {
             // bottom
-            grid.HighlightCell(grid.GetNextCellVertical(-1, currentCell), currentCell);
+            grid.HighlightCell(grid.GetNextCellVertical(-1, currentCell), currentCell, highlightCellLight);
         }
         else
         {
             // right
-            grid.HighlightCell(grid.GetNextCellHorizontal(1, currentCell), currentCell);
+            grid.HighlightCell(grid.GetNextCellHorizontal(1, currentCell), currentCell, highlightCellLight);
         }
     }
 

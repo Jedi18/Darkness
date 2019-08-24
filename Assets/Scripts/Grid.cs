@@ -194,7 +194,7 @@ public class Grid : MonoBehaviour {
             return grid[i, j];
         }
     }
-    public void HighlightCell(Cell cell, Cell currentPlayerCell)
+    public void HighlightCell(Cell cell, Cell currentPlayerCell, Light cellLight)
     {
         if(cell == null)
         {
@@ -214,6 +214,10 @@ public class Grid : MonoBehaviour {
 
             currentHighlightedCell = cell;
             cells[currentHighlightedCell.GetCellIndexX(), currentHighlightedCell.GetCellIndexY()].layer = LayerMask.NameToLayer(lightedCell);
+            // move cell spot light to new highlighted cell
+            Vector3 currentHighlightedCellPosition = currentHighlightedCell.getCenterPosition();
+            // so that light appearws above tiles (-1 in z)
+            cellLight.transform.position = new Vector3(currentHighlightedCellPosition.x, currentHighlightedCellPosition.y, -1);
         }
     }
 
