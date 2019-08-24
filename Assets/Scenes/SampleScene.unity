@@ -289,6 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 1905185031973376, guid: 6b60eda00e7b5904fbfec18cdedb40e5, type: 2}
+  - {fileID: 1192095858555548, guid: 6043bbcc0f410fd40abf16621b056664, type: 2}
   grid: {fileID: 479809129}
 --- !u!114 &479809129
 MonoBehaviour:
@@ -493,8 +494,8 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 1, g: 0.856386, b: 0.16509432, a: 1}
-  m_Intensity: 7
-  m_Range: 4
+  m_Intensity: 13
+  m_Range: 3.5
   m_SpotAngle: 121
   m_CookieSize: 10
   m_Shadows:

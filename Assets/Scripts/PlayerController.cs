@@ -78,6 +78,9 @@ public class PlayerController : MonoBehaviour {
         {
             Debug.Log("Added wall entity at 1,0");
             entityManager.AddWallEntity(grid.GetCellAtIndex(1, 0));
+
+            Debug.Log("Added trap entity at 1,4");
+            entityManager.AddTrapEntity(grid.GetCellAtIndex(1, 4));
         }
     }
 
