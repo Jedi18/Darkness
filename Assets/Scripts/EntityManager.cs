@@ -31,4 +31,9 @@ public class EntityManager : MonoBehaviour {
     {
         return entities[cell.GetCellIndexX(), cell.GetCellIndexY()];
     }
+
+    public void AddWallEntity(Cell cell)
+    {
+        entities[cell.GetCellIndexX(), cell.GetCellIndexY()] = new WallEntity(cell);
+    }
 }

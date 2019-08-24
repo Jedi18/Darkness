@@ -72,6 +72,13 @@ public class PlayerController : MonoBehaviour {
                 SetPosition(nextCell);
             }
         }
+
+        // testing purpose, remove later
+        if(Input.GetButtonUp("Fire1"))
+        {
+            Debug.Log("Added wall entity at 1,0");
+            entityManager.AddWallEntity(grid.GetCellAtIndex(1, 0));
+        }
     }
 
     private void SetPosition(Cell cell)

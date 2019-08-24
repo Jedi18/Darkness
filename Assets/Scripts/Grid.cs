@@ -262,4 +262,9 @@ public class Grid : MonoBehaviour {
 
         return gameObjects;
     }
+
+    public Cell GetCellAtIndex(int x, int y)
+    {
+        return grid[x, y];
+    }
 }

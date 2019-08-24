@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Cell.cs" />
+     <Compile Include="Assets\Scripts\Entities\WallEntity.cs" />
      <Compile Include="Assets\Scripts\EntityManager.cs" />
      <Compile Include="Assets\Scripts\Grid.cs" />
      <Compile Include="Assets\Scripts\ICellEntity.cs" />
