@@ -14,6 +14,7 @@ public class Grid : MonoBehaviour {
     private Cell[,] grid;
 
     public GameObject cell;
+    public EntityManager entityManager;
 
     public float shiftLeft;
     public float shiftBottom;
@@ -31,6 +32,9 @@ public class Grid : MonoBehaviour {
         shiftLeft = (gridX*cellWidth) / 2;
         shiftBottom = (gridY*cellHeight) / 2;
         currentHighlightedCell = null;
+
+        // to initialize entity list in entity manager class
+        entityManager.InitializeEntities(gridX, gridY);
 
         InstantiateCells();
         DrawCells();

@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 
     public Grid grid;
     private Cell currentCell;
+    public EntityManager entityManager;
 
     public float playerMoveTime;
 
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour {
          * and then calls SetPosition.
          * only works when one key is pressed
          * */
-        if (Input.GetKeyDown("up") || Input.GetKeyDown("down") || Input.GetKeyDown("left") || Input.GetKeyDown("right"))
+        if (Input.GetKeyDown("up") || Input.GetKeyDown("down") || Input.GetKeyDown("left") || Input.GetKeyDown("right") || Input.GetKeyDown("w") || Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d"))
         {
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
@@ -45,13 +46,30 @@ public class PlayerController : MonoBehaviour {
                 return;
             }
 
+            Cell nextCell;
+
             if (x == 0)
             {
-                SetPosition(grid.GetNextCellVerticalMove((int)y, currentCell));
+                nextCell = grid.GetNextCellVerticalMove((int)y, currentCell);
             }
-            else if (y == 0)
+            else // y == 0
             {
-                SetPosition(grid.GetNextCellHorizontalMove((int)x, currentCell));
+                nextCell = grid.GetNextCellHorizontalMove((int)x, currentCell);
+            }
+
+            // if cell has entity, check to see if entity is passable
+            if (entityManager.HasEntity(nextCell))
+            {
+                ICellEntity entity = entityManager.GetEntity(nextCell);
+
+                if (entity.ExecuteAction())
+                {
+                    SetPosition(nextCell);
+                }
+            }
+            else
+            {
+                SetPosition(nextCell);
             }
         }
     }
