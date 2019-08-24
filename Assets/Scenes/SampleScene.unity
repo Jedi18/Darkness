@@ -287,6 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ed3fe4947572c49842c53f8a78be1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 1905185031973376, guid: 6b60eda00e7b5904fbfec18cdedb40e5, type: 2}
 --- !u!114 &479809129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,7 +510,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1591
+    m_Bits: 7735
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
@@ -630,7 +632,7 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 1, g: 0.856386, b: 0.16509432, a: 1}
-  m_Intensity: 6
+  m_Intensity: 2.18
   m_Range: 4
   m_SpotAngle: 56
   m_CookieSize: 10
@@ -648,7 +650,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1591
+    m_Bits: 7735
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}

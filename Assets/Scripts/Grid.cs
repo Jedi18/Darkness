@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour {
 
+    public static int lightZPosition = -3;
+    public static int entityZPosition = -2;
+
     public int gridX;
     public int gridY;
 
@@ -221,7 +224,7 @@ public class Grid : MonoBehaviour {
             // move cell spot light to new highlighted cell
             Vector3 currentHighlightedCellPosition = currentHighlightedCell.getCenterPosition();
             // so that light appearws above tiles (-1 in z)
-            cellLight.transform.position = new Vector3(currentHighlightedCellPosition.x, currentHighlightedCellPosition.y, -1);
+            cellLight.transform.position = new Vector3(currentHighlightedCellPosition.x, currentHighlightedCellPosition.y, lightZPosition);
         }
     }
 

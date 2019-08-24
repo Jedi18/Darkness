@@ -6,6 +6,7 @@ public class EntityManager : MonoBehaviour {
 
     // Use this for initialization
     public ICellEntity[,] entities;
+    public GameObject[] prefabs;
 
 	void Start () {
 		
@@ -34,6 +35,8 @@ public class EntityManager : MonoBehaviour {
 
     public void AddWallEntity(Cell cell)
     {
-        entities[cell.GetCellIndexX(), cell.GetCellIndexY()] = new WallEntity(cell);
+        ICellEntity ent = new WallEntity(cell, prefabs[0]);
+        entities[cell.GetCellIndexX(), cell.GetCellIndexY()] = ent;
+        Instantiate(ent.gameObject, new Vector3(cell.getCenterPosition().x, cell.getCenterPosition().y, -2), Quaternion.identity);
     }
 }

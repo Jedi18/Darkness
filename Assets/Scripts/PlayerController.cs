@@ -163,6 +163,11 @@ public class PlayerController : MonoBehaviour {
         transform.position = destination;
     }
 
+    public void RenderNearbyEntities(bool render_on)
+    {
+
+    }
+
     /*public void LightOrDarkenSurroundingCells(bool light)
     {
         if(currentCell != null)
