@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 479809129}
+  playerMoveTime: 0.2
 --- !u!1 &479809126
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,10 +288,6 @@ MonoBehaviour:
   cellWidth: 2
   cellHeight: 2
   cell: {fileID: 1424123100279440, guid: 341d1135ae59a6b4c95a81abd62b75dc, type: 2}
-  highlitedCellMaterial: {fileID: 2100000, guid: 75e527247bd573244bee6d62d067ab61,
-    type: 2}
-  originalCellMaterial: {fileID: 2100000, guid: 6c1bbb1bfc166cd46990058bfc0256f4,
-    type: 2}
   shiftLeft: 0
   shiftBottom: 0
   unlightedCell: Cell

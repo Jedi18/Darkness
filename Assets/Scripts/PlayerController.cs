@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
     public Grid grid;
     private Cell currentCell;
 
+    public float playerMoveTime;
+
 	// Use this for initialization
 	void Start () {
         //InvokeRepeating("spawnAtRandomPositions", 0.2f, 0.5f);
@@ -58,7 +60,8 @@ public class PlayerController : MonoBehaviour {
         currentCell = cell;
         Vector3 cellPosition = currentCell.getCenterPosition();
         // transform.position.z must be negative for it to properly render above the cells
-        gameObject.transform.position = new Vector3(cellPosition.x, cellPosition.y, gameObject.transform.position.z);
+        Vector3 newPosition = new Vector3(cellPosition.x, cellPosition.y, gameObject.transform.position.z);
+        StartCoroutine(MovePlayer(transform.position, newPosition, playerMoveTime));
         LightOrDarkenCurrentCell(true);
     }
 
@@ -118,6 +121,19 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
+    }
+
+    IEnumerator MovePlayer(Vector3 source, Vector3 destination, float timeToMove)
+    {
+        float startTime = Time.time;
+
+        while(Time.time - startTime < timeToMove)
+        {
+            transform.position = Vector3.Lerp(source, destination, (Time.time - startTime) / timeToMove);
+            yield return null;
+        }
+
+        transform.position = destination;
     }
 
     /*public void LightOrDarkenSurroundingCells(bool light)
