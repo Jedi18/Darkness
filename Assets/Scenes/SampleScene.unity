@@ -217,6 +217,7 @@ MonoBehaviour:
   grid: {fileID: 479809129}
   entityManager: {fileID: 479809128}
   entityGenerator: {fileID: 479809130}
+  cameraController: {fileID: 519420030}
   playerMoveTime: 0.2
   highlightCellLight: {fileID: 1931822986}
 --- !u!1 &479809126
@@ -276,8 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcbcbfcd14566d48a2f3b7d94999519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridX: 5
-  gridY: 5
+  gridX: 10
+  gridY: 10
   cellWidth: 2
   cellHeight: 2
   cell: {fileID: 1424123100279440, guid: 341d1135ae59a6b4c95a81abd62b75dc, type: 2}
@@ -301,7 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityManager: {fileID: 479809128}
   grid: {fileID: 479809129}
-  initialNoOfEntities: 5
+  initialNoOfEntities: 10
   initialWallPercent: 0.5
   initialTrapPercent: 0.5
 --- !u!1 &519420028
@@ -314,6 +315,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -328,6 +330,24 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1091864485bb12f419509075e98f80bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastPlayerPosition: {x: 0, y: 0, z: 0}
+  initialized: 0
+  moveIfBeyondPercentX: 0.5
+  moveIfBeyondPercentY: 0.5
+  horizontalExtent: 0
+  verticalExtent: 0
+  cameraCenter: {x: 0, y: 0}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

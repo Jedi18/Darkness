@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     private Cell currentCell;
     public EntityManager entityManager;
     public EntityGenerator entityGenerator;
+    public CameraController cameraController;
 
     public float playerMoveTime;
 
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //InvokeRepeating("spawnAtRandomPositions", 0.2f, 0.5f);
-        Invoke("spawnAtRandomPositions", 0.2f);
+        Invoke("spawnAtCenter", 0.2f);
 	}
 	
 	// Update is called once per frame
@@ -73,16 +74,6 @@ public class PlayerController : MonoBehaviour {
                 SetPosition(nextCell);
             }
         }
-
-        // testing purpose, remove later
-        if(Input.GetButtonUp("Fire1"))
-        {
-            Debug.Log("Added wall entity at 1,0");
-            entityManager.AddWallEntity(grid.GetCellAtIndex(1, 0));
-
-            Debug.Log("Added trap entity at 1,4");
-            entityManager.AddTrapEntity(grid.GetCellAtIndex(1, 4));
-        }
     }
 
     private void SetPosition(Cell cell)
@@ -95,6 +86,9 @@ public class PlayerController : MonoBehaviour {
         Vector3 newPosition = new Vector3(cellPosition.x, cellPosition.y, gameObject.transform.position.z);
         StartCoroutine(MovePlayer(transform.position, newPosition, playerMoveTime));
 
+        // update camera on player movement
+        cameraController.PlayerMoved(newPosition);
+
         LightOrDarkenCurrentCell(true);
     }
 
@@ -102,6 +96,14 @@ public class PlayerController : MonoBehaviour {
     {
         SetPosition(grid.GetUnoccupiedRandomCell());
 
+        //spawn entities
+        entityGenerator.Generate(entityGenerator.initialNoOfEntities, entityGenerator.initialWallPercent, entityGenerator.initialTrapPercent);
+    }
+
+    private void spawnAtCenter()
+    {
+        SetPosition(grid.GetCellAtIndex(grid.gridX/2, grid.gridY/2));
+        cameraController.SetInitialCellPosition(transform.position);
         //spawn entities
         entityGenerator.Generate(entityGenerator.initialNoOfEntities, entityGenerator.initialWallPercent, entityGenerator.initialTrapPercent);
     }
