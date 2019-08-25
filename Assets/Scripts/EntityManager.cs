@@ -9,15 +9,6 @@ public class EntityManager : MonoBehaviour {
     public GameObject[] prefabs;
     public Grid grid;
 
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void InitializeEntities(int x, int y)
     {
         entities = new ICellEntity[x, y];

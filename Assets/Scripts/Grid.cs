@@ -27,9 +27,10 @@ public class Grid : MonoBehaviour {
 
     public string unlightedCell;
     public string lightedCell;
+    public float lightMoveTime;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         grid = new Cell[gridX,gridY];
         cells = new GameObject[gridX, gridY];
         shiftLeft = (gridX*cellWidth) / 2;
@@ -224,7 +225,9 @@ public class Grid : MonoBehaviour {
             // move cell spot light to new highlighted cell
             Vector3 currentHighlightedCellPosition = currentHighlightedCell.getCenterPosition();
             // so that light appearws above tiles (-1 in z)
-            cellLight.transform.position = new Vector3(currentHighlightedCellPosition.x, currentHighlightedCellPosition.y, lightZPosition);
+            //cellLight.transform.position = new Vector3(currentHighlightedCellPosition.x, currentHighlightedCellPosition.y, lightZPosition);
+            Vector3 newPosition = new Vector3(currentHighlightedCellPosition.x, currentHighlightedCellPosition.y, lightZPosition);
+            StartCoroutine(MoveObject(cellLight.gameObject, cellLight.transform.position, newPosition, lightMoveTime));
         }
     }
 
@@ -298,5 +301,18 @@ public class Grid : MonoBehaviour {
     public Cell GetCellAtIndex(int x, int y)
     {
         return grid[x, y];
+    }
+
+    IEnumerator MoveObject(GameObject obj, Vector3 source, Vector3 destination, float timeToMove)
+    {
+        float startTime = Time.time;
+
+        while (Time.time - startTime < timeToMove)
+        {
+            obj.transform.position = Vector3.Lerp(source, destination, (Time.time - startTime) / timeToMove);
+            yield return null;
+        }
+
+        transform.position = destination;
     }
 }
