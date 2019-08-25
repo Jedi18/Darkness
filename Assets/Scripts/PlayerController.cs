@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
     public Grid grid;
     private Cell currentCell;
     public EntityManager entityManager;
+    public EntityGenerator entityGenerator;
 
     public float playerMoveTime;
 
@@ -99,7 +100,10 @@ public class PlayerController : MonoBehaviour {
 
     private void spawnAtRandomPositions()
     {
-        SetPosition(grid.GetRandomCell());
+        SetPosition(grid.GetUnoccupiedRandomCell());
+
+        //spawn entities
+        entityGenerator.Generate(entityGenerator.initialNoOfEntities, entityGenerator.initialWallPercent, entityGenerator.initialTrapPercent);
     }
 
     private void CellRelativeToPlayerHighlighting()
@@ -211,6 +215,11 @@ public class PlayerController : MonoBehaviour {
                 cellEntity.gameObject.GetComponent<Renderer>().enabled = false;
             }
         }
+    }
+
+    public Cell GetCurrentCell()
+    {
+        return currentCell;
     }
 
     /*public void LightOrDarkenSurroundingCells(bool light)

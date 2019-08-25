@@ -18,6 +18,7 @@ public class Grid : MonoBehaviour {
 
     public GameObject cell;
     public EntityManager entityManager;
+    public PlayerController player;
 
     public float shiftLeft;
     public float shiftBottom;
@@ -74,6 +75,18 @@ public class Grid : MonoBehaviour {
         int randy = (int)Random.Range(0, gridY);
 
         return grid[randx, randy];
+    }
+
+    public Cell GetUnoccupiedRandomCell()
+    {
+        Cell spawnCell = GetRandomCell();
+
+        while (entityManager.HasEntity(spawnCell) || spawnCell == player.GetCurrentCell())
+        {
+            spawnCell = GetRandomCell();
+        }
+
+        return spawnCell;
     }
 
     public Cell GetNextCellHorizontal(int h, Cell curCell)

@@ -30,6 +30,7 @@ public class EntityManager : MonoBehaviour {
         return entities[cell.GetCellIndexX(), cell.GetCellIndexY()];
     }
 
+    // assumes cell has been checked for any containing entities
     public void AddWallEntity(Cell cell)
     {
         ICellEntity ent = new WallEntity(cell);
@@ -38,6 +39,7 @@ public class EntityManager : MonoBehaviour {
         ent.gameObject = go;
     }
 
+    // assumes cell has been checked for any containing entities
     public void AddTrapEntity(Cell cell)
     {
         ICellEntity ent = new TrapEntity(cell);
