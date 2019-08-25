@@ -103,7 +103,6 @@ public class PlayerController : MonoBehaviour {
     private void spawnAtCenter()
     {
         SetPosition(grid.GetCellAtIndex(grid.gridX/2, grid.gridY/2));
-        cameraController.SetInitialCellPosition(transform.position);
         //spawn entities
         entityGenerator.Generate(entityGenerator.initialNoOfEntities, entityGenerator.initialWallPercent, entityGenerator.initialTrapPercent);
     }
