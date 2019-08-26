@@ -220,6 +220,7 @@ MonoBehaviour:
   cameraController: {fileID: 519420030}
   playerMoveTime: 0.2
   highlightCellLight: {fileID: 1931822986}
+  directionalLight: {fileID: 637859658}
 --- !u!1 &479809126
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityManager: {fileID: 479809128}
   grid: {fileID: 479809129}
-  initialNoOfEntities: 10
+  initialNoOfEntities: 20
   initialWallPercent: 0.5
   initialTrapPercent: 0.5
 --- !u!1 &519420028

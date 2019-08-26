@@ -57,7 +57,6 @@ public class CameraController : MonoBehaviour {
     IEnumerator MoveCamera(GameObject obj, Vector3 source, Vector3 amount, float timeToMove)
     {
         Vector3 destination = source + amount;
-        Debug.Log(destination);
         float startTime = Time.time;
 
         while (Time.time - startTime < timeToMove)

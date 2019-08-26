@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour {
     public float playerMoveTime;
 
     public Light highlightCellLight;
+    public Light directionalLight;
+
+    bool lightSwitchedOn = true;
 
 	// Use this for initialization
 	void Start () {
@@ -74,6 +77,11 @@ public class PlayerController : MonoBehaviour {
                 SetPosition(nextCell);
             }
         }
+
+        if(Input.GetKeyDown("t"))
+        {
+            ToggleLight();
+        }
     }
 
     private void SetPosition(Cell cell)
@@ -122,7 +130,10 @@ public class PlayerController : MonoBehaviour {
         // left - -45 to 45
         // bottom - -135 to -45
 
-        RenderHighlightedEntity(false);
+        if(lightSwitchedOn)
+        {
+            RenderHighlightedEntity(false);
+        }
 
         if(angle >= 45 && angle < 135)
         {
@@ -145,7 +156,10 @@ public class PlayerController : MonoBehaviour {
             grid.HighlightCell(grid.GetNextCellHorizontal(1, currentCell), currentCell, highlightCellLight);
         }
 
-        RenderHighlightedEntity(true);
+        if(lightSwitchedOn)
+        {
+            RenderHighlightedEntity(true);
+        }
     }
 
     public void LightOrDarkenCurrentCell(bool light)
@@ -221,6 +235,17 @@ public class PlayerController : MonoBehaviour {
     public Cell GetCurrentCell()
     {
         return currentCell;
+    }
+
+    public void ToggleLight()
+    {
+        highlightCellLight.enabled = highlightCellLight.enabled == true ? false : true;
+        gameObject.GetComponentInChildren<Light>().enabled = gameObject.GetComponentInChildren<Light>().enabled == true ? false : true;
+        directionalLight.enabled = directionalLight.enabled == true ? false : true;
+        lightSwitchedOn = lightSwitchedOn == true ? false : true;
+
+        // to not render highlighted entity on switching off the light
+        RenderHighlightedEntity(false);
     }
 
     /*public void LightOrDarkenSurroundingCells(bool light)
