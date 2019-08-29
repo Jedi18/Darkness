@@ -10,15 +10,17 @@ public class EntityGenerator : MonoBehaviour {
     public int initialNoOfEntities;
     public float initialWallPercent;
     public float initialTrapPercent;
+    public float initialEnemyPercent;
 
 	// Use this for initialization
 	void Start () {
 	}
 	
-    public void Generate(int numEntities, float wallPercent, float trapPercent)
+    public void Generate(int numEntities, float wallPercent, float trapPercent, float enemyPercent)
     {
         int numWalls = (int)(wallPercent * numEntities);
         int numTraps = (int)(trapPercent * numEntities);
+        int numEnemies = (int)(enemyPercent * numEntities);
 
         for(int i=0;i<numWalls;i++)
         {
@@ -28,6 +30,11 @@ public class EntityGenerator : MonoBehaviour {
         for(int j=0;j<numTraps;j++)
         {
             entityManager.AddTrapEntity(grid.GetUnoccupiedRandomCell());
+        }
+
+        for(int k=0;k<numEnemies;k++)
+        {
+            entityManager.AddEnemyEntity(grid.GetUnoccupiedRandomCell());
         }
     }
 }

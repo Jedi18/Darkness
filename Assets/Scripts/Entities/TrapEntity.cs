@@ -18,4 +18,9 @@ public class TrapEntity : ICellEntity {
     {
         return true;
     }
+
+    public void Found()
+    {
+
+    }
 }

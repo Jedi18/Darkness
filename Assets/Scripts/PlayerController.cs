@@ -105,14 +105,14 @@ public class PlayerController : MonoBehaviour {
         SetPosition(grid.GetUnoccupiedRandomCell());
 
         //spawn entities
-        entityGenerator.Generate(entityGenerator.initialNoOfEntities, entityGenerator.initialWallPercent, entityGenerator.initialTrapPercent);
+        entityGenerator.Generate(entityGenerator.initialNoOfEntities, entityGenerator.initialWallPercent, entityGenerator.initialTrapPercent,entityGenerator.initialEnemyPercent);
     }
 
     private void spawnAtCenter()
     {
         SetPosition(grid.GetCellAtIndex(grid.gridX/2, grid.gridY/2));
         //spawn entities
-        entityGenerator.Generate(entityGenerator.initialNoOfEntities, entityGenerator.initialWallPercent, entityGenerator.initialTrapPercent);
+        entityGenerator.Generate(entityGenerator.initialNoOfEntities, entityGenerator.initialWallPercent, entityGenerator.initialTrapPercent,entityGenerator.initialEnemyPercent);
     }
 
     private void CellRelativeToPlayerHighlighting()
@@ -205,10 +205,23 @@ public class PlayerController : MonoBehaviour {
                     if (render_on)
                     {
                         entities[i].gameObject.GetComponent<Renderer>().enabled = true;
+
+                        Renderer[] childrenRenderers = entities[i].gameObject.GetComponentsInChildren<Renderer>();
+
+                        for(int k=0;k<childrenRenderers.Length;k++)
+                        {
+                            childrenRenderers[k].enabled = true;
+                        }
                     }
                     else
                     {
                         entities[i].gameObject.GetComponent<Renderer>().enabled = false;
+
+                        Renderer[] childrenRenderers = entities[i].gameObject.GetComponentsInChildren<Renderer>();
+                        for (int k = 0; k < childrenRenderers.Length; k++)
+                        {
+                            childrenRenderers[k].enabled = false;
+                        }
                     }
                 }
             }
@@ -224,11 +237,27 @@ public class PlayerController : MonoBehaviour {
             if (render_on)
             {
                 cellEntity.gameObject.GetComponent<Renderer>().enabled = true;
+                Renderer[] childrenRenderers = cellEntity.gameObject.GetComponentsInChildren<Renderer>();
+
+                for (int k = 0; k < childrenRenderers.Length; k++)
+                {
+                    childrenRenderers[k].enabled = true;
+                }
             }
             else
             {
                 cellEntity.gameObject.GetComponent<Renderer>().enabled = false;
+
+                Renderer[] childrenRenderers = cellEntity.gameObject.GetComponentsInChildren<Renderer>();
+
+                for (int k = 0; k < childrenRenderers.Length; k++)
+                {
+                    childrenRenderers[k].enabled = false;
+                }
             }
+
+            // execute on found action
+            cellEntity.Found();
         }
     }
 

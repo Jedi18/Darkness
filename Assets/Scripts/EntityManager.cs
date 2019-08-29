@@ -47,6 +47,15 @@ public class EntityManager : MonoBehaviour {
         GameObject go = Instantiate(prefabs[1], new Vector3(cell.getCenterPosition().x, cell.getCenterPosition().y, -2), Quaternion.identity);
         ent.gameObject = go;
     }
+
+    public void AddEnemyEntity(Cell cell)
+    {
+        ICellEntity ent = new EnemyEntity(cell);
+        entities[cell.GetCellIndexX(), cell.GetCellIndexY()] = ent;
+        GameObject go = Instantiate(prefabs[2], new Vector3(cell.getCenterPosition().x, cell.getCenterPosition().y, -2), Quaternion.identity);
+        ent.gameObject = go;
+    }
+
     public ICellEntity[] GetNearbyCellEntities(Cell cell)
     {
         if(cell == null)

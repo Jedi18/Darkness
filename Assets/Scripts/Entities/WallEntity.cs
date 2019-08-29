@@ -19,4 +19,9 @@ public class WallEntity : ICellEntity
         // stop player from entering this cell
         return false;
     }
+
+    public void Found()
+    {
+
+    }
 }

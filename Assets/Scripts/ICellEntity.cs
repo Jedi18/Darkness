@@ -11,4 +11,6 @@ public interface ICellEntity {
     // Returning false on execute action would mean that the player can't move into the next cell
     bool ExecuteAction();
 
+    void Found();
+
 }
