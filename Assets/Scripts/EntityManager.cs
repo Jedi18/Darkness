@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityManager : MonoBehaviour {
+public class EntityManager : MonoBehaviour
+{
 
     // Use this for initialization
     public ICellEntity[,] entities;
@@ -16,7 +17,7 @@ public class EntityManager : MonoBehaviour {
 
     public bool HasEntity(Cell cell)
     {
-        if(cell == null)
+        if (cell == null)
         {
             return false;
         }
@@ -58,7 +59,7 @@ public class EntityManager : MonoBehaviour {
 
     public ICellEntity[] GetNearbyCellEntities(Cell cell)
     {
-        if(cell == null)
+        if (cell == null)
         {
             return null;
         }
@@ -68,9 +69,9 @@ public class EntityManager : MonoBehaviour {
 
         int o = 0;
 
-        for(int i=0;i<cells.Length;i++)
+        for (int i = 0; i < cells.Length; i++)
         {
-            if(cells[i] != null)
+            if (cells[i] != null)
             {
                 if (HasEntity(cells[i]))
                 {
@@ -82,5 +83,54 @@ public class EntityManager : MonoBehaviour {
         }
 
         return nearbyEntities;
+    }
+
+    public void MoveEntity(Cell oldCell, Cell newCell)
+    {
+        EnemyEntity entity = (EnemyEntity)entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()];
+
+        entities[newCell.GetCellIndexX(), newCell.GetCellIndexY()] = entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()];
+        entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()] = null;
+
+        entity.MoveToCell(newCell);
+    }
+
+    /* ---------   Coroutine and public function to move an object ---------- */
+
+    IEnumerator MoveObject(GameObject obj, Vector3 source, Vector3 destination, float timeToMove, ICellEntity cellEntity)
+    {
+        float startTime = Time.time;
+
+        while (Time.time - startTime < timeToMove)
+        {
+            obj.transform.position = Vector3.Lerp(source, destination, (Time.time - startTime) / timeToMove);
+            yield return null;
+        }
+
+        transform.position = destination;
+        
+        // for cell entities
+        if(cellEntity != null)
+        {
+            cellEntity.HasFinishedMoving();
+        }
+    }
+
+    public void MoveCellObject(GameObject obj, Vector3 source, Vector3 destination, float timeToMove, ICellEntity cellEntity)
+    {
+        StartCoroutine(MoveObject(obj, source, destination, timeToMove, cellEntity));
+    }
+
+
+    /* --------------------- Move object code finished -------------------- */
+    public void TestMove(Cell cell)
+    {
+        StartCoroutine(TestMoveAfter(cell));
+    }
+
+    IEnumerator TestMoveAfter(Cell cell)
+    {
+        yield return new WaitForSeconds(0.1f);
+        MoveEntity(cell, grid.GetNextCellVerticalMove(1, cell));
     }
 }

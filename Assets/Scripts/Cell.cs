@@ -39,4 +39,9 @@ public class Cell{
     {
         return cellIndexY;
     }
+
+    public Vector3 getCenterPositionForEntity()
+    {
+        return centerPos + new Vector3(0, 0, -2);
+    }
 }

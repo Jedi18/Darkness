@@ -24,4 +24,9 @@ public class WallEntity : ICellEntity
     {
 
     }
+
+    public void HasFinishedMoving()
+    {
+
+    }
 }

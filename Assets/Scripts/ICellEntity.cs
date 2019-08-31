@@ -13,4 +13,6 @@ public interface ICellEntity {
 
     void Found();
 
+    void HasFinishedMoving();
+
 }

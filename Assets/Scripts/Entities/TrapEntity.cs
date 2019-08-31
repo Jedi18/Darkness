@@ -23,4 +23,9 @@ public class TrapEntity : ICellEntity {
     {
 
     }
+
+    public void HasFinishedMoving()
+    {
+
+    }
 }
