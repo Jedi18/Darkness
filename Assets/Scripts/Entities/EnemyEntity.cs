@@ -50,13 +50,14 @@ public class EnemyEntity : ICellEntity {
 
         if(!Moving)
         {
-            Moving = true;
-            entityManager.TestMove(Cell);
+            entityManager.TestMove(Cell, this);
         }
     }
 
     public void MoveToCell(Cell cell)
     {
+        Moving = true;
+        entityManager.MoveEntity(Cell, cell);
         this.Cell = cell;
         
         entityManager.MoveCellObject(gameObject, gameObject.transform.position, cell.getCenterPositionForEntity(), enemyMoveTime, this);
@@ -65,5 +66,26 @@ public class EnemyEntity : ICellEntity {
     public void HasFinishedMoving()
     {
         Moving = false;
+        CheckIfOutsideHighlightedRegion();
+    }
+
+    void CheckIfOutsideHighlightedRegion()
+    {
+        /* checks to see if object has moved out of highlighted region, in which case it should
+         * derendered( except for the eyes).                                                 */
+
+        if(grid.currentHighlightedCell != Cell)
+        {
+            Renderer[] childrenRenderers = gameObject.GetComponentsInChildren<Renderer>();
+
+            // hide parent renderer
+            childrenRenderers[0].enabled = false;
+
+            // k = 1 to skip parent renderer
+            for (int k = 1; k < childrenRenderers.Length; k++)
+            {
+                childrenRenderers[k].enabled = true;
+            }
+        }
     }
 }

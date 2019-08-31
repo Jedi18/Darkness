@@ -87,12 +87,12 @@ public class EntityManager : MonoBehaviour
 
     public void MoveEntity(Cell oldCell, Cell newCell)
     {
-        EnemyEntity entity = (EnemyEntity)entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()];
-
-        entities[newCell.GetCellIndexX(), newCell.GetCellIndexY()] = entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()];
-        entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()] = null;
-
-        entity.MoveToCell(newCell);
+        // oldcell != newCell condition in case the enemy is at the borders of the grid, so recieves same cell
+        if(oldCell != newCell)
+        {
+            entities[newCell.GetCellIndexX(), newCell.GetCellIndexY()] = entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()];
+            entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()] = null;
+        }
     }
 
     /* ---------   Coroutine and public function to move an object ---------- */
@@ -123,14 +123,8 @@ public class EntityManager : MonoBehaviour
 
 
     /* --------------------- Move object code finished -------------------- */
-    public void TestMove(Cell cell)
+    public void TestMove(Cell cell, EnemyEntity entity)
     {
-        StartCoroutine(TestMoveAfter(cell));
-    }
-
-    IEnumerator TestMoveAfter(Cell cell)
-    {
-        yield return new WaitForSeconds(0.1f);
-        MoveEntity(cell, grid.GetNextCellVerticalMove(1, cell));
+        entity.MoveToCell(grid.GetNextCellVerticalMove(1, cell));
     }
 }
