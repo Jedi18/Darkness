@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
     public Light highlightCellLight;
     public Light directionalLight;
 
-    bool lightSwitchedOn = true;
+    public bool lightSwitchedOn = true;
 
 	// Use this for initialization
 	void Start () {

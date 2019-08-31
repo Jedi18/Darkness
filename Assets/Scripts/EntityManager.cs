@@ -11,6 +11,7 @@ public class EntityManager : MonoBehaviour
     public GameObject[] prefabs;
     public Grid grid;
     public EntityGenerator entityGenerator;
+    public PlayerController player;
 
     public EnemyEntity[] activatedEnemies;
     int enemyIndex = 0;
@@ -141,11 +142,14 @@ public class EntityManager : MonoBehaviour
     // maintains list of activated enemies and at small time intervals loops through them and makes them move towards the player
     public void MoveEnemies()
     {
-        for(int i=0;i<enemyIndex;i++)
+        if(player.lightSwitchedOn)
         {
-            if(activatedEnemies[i].canBeMoved)
+            for (int i = 0; i < enemyIndex; i++)
             {
-                activatedEnemies[i].MoveTowardsPlayer();
+                if (activatedEnemies[i].canBeMoved)
+                {
+                    activatedEnemies[i].MoveTowardsPlayer();
+                }
             }
         }
     }
