@@ -14,6 +14,7 @@ public class EnemyEntity : ICellEntity {
     public float enemyMoveTime = 0.2f;
     public EntityManager entityManager;
     public Grid grid;
+    public PlayerController player;
 
     public EnemyEntity(Cell cell)
     {
@@ -24,6 +25,7 @@ public class EnemyEntity : ICellEntity {
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         entityManager = gameManager.GetComponent<EntityManager>();
         grid = gameManager.GetComponent<Grid>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
 	public bool ExecuteAction()
@@ -46,11 +48,7 @@ public class EnemyEntity : ICellEntity {
         if (!HasBeenFound)
         {
             HasBeenFound = true;
-        }
-
-        if(!Moving)
-        {
-            entityManager.TestMove(Cell, this);
+            entityManager.ActivateEnemy(this);
         }
     }
 
@@ -86,6 +84,16 @@ public class EnemyEntity : ICellEntity {
             {
                 childrenRenderers[k].enabled = true;
             }
+        }
+    }
+
+    public void MoveTowardsPlayer()
+    {
+        if(!Moving)
+        {
+            Cell nextCell = grid.GetCellTowards(Cell, player.GetCurrentCell());
+
+            MoveToCell(nextCell);
         }
     }
 }

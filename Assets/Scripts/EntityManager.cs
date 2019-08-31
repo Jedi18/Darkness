@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class EntityManager : MonoBehaviour
 {
+    public float enemyMoveToNextCellTime = 2f;
 
     // Use this for initialization
     public ICellEntity[,] entities;
     public GameObject[] prefabs;
     public Grid grid;
+    public EntityGenerator entityGenerator;
+
+    public EnemyEntity[] activatedEnemies;
+    int enemyIndex = 0;
 
     public void InitializeEntities(int x, int y)
     {
         entities = new ICellEntity[x, y];
+        activatedEnemies = new EnemyEntity[(int)(entityGenerator.initialNoOfEntities * entityGenerator.initialEnemyPercent) + 1];
+
+        InvokeRepeating("MoveEnemies", 0.5f, enemyMoveToNextCellTime);
     }
 
     public bool HasEntity(Cell cell)
@@ -121,10 +129,20 @@ public class EntityManager : MonoBehaviour
         StartCoroutine(MoveObject(obj, source, destination, timeToMove, cellEntity));
     }
 
+    public void ActivateEnemy(EnemyEntity entity)
+    {
+        activatedEnemies[enemyIndex] = entity;
+        enemyIndex++;
+    }
+
+    // maintains list of activated enemies and at small time intervals loops through them and makes them move towards the player
+    public void MoveEnemies()
+    {
+        for(int i=0;i<enemyIndex;i++)
+        {
+            activatedEnemies[i].MoveTowardsPlayer();
+        }
+    }
 
     /* --------------------- Move object code finished -------------------- */
-    public void TestMove(Cell cell, EnemyEntity entity)
-    {
-        entity.MoveToCell(grid.GetNextCellVerticalMove(1, cell));
-    }
 }

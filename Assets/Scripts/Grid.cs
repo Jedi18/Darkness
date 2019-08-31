@@ -328,4 +328,45 @@ public class Grid : MonoBehaviour {
 
         transform.position = destination;
     }
+
+    public Cell GetCellTowards(Cell currentCell, Cell targetCell)
+    {
+        Vector3 target = targetCell.getCenterPosition();
+
+        // determine where is the point is relative to player
+
+        // get angle between vector(point to player) and x axis
+        Vector2 disp = target - currentCell.getCenterPosition();
+        float angle = Vector2.SignedAngle(disp, Vector3.left);
+
+        // right - 135 to 180 and -180 to -135
+        // top  - 45 to 135
+        // left - -45 to 45
+        // bottom - -135 to -45
+
+        Cell nextCell;
+
+        if (angle >= 45 && angle < 135)
+        {
+            // top
+            nextCell = GetNextCellVertical(1, currentCell);
+        }
+        else if (angle >= -45 && angle < 45)
+        {
+            // left
+            nextCell = GetNextCellHorizontal(-1, currentCell);
+        }
+        else if (angle >= -135 && angle < -45)
+        {
+            // bottom
+            nextCell = GetNextCellVertical(-1, currentCell);
+        }
+        else
+        {
+            // right
+            nextCell = GetNextCellHorizontal(1, currentCell);
+        }
+
+        return nextCell;
+    }
 }

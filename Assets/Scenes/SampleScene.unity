@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 234701137}
   m_Layer: 8
   m_Name: PlayerBody
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -264,11 +264,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ed3fe4947572c49842c53f8a78be1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyMoveToNextCellTime: 1.25
   prefabs:
   - {fileID: 1905185031973376, guid: 6b60eda00e7b5904fbfec18cdedb40e5, type: 2}
   - {fileID: 1048527262057566, guid: 6043bbcc0f410fd40abf16621b056664, type: 2}
   - {fileID: 1452389987704250, guid: b907a6b900f805245bd589981798ffbe, type: 2}
   grid: {fileID: 479809129}
+  entityGenerator: {fileID: 479809130}
 --- !u!114 &479809129
 MonoBehaviour:
   m_ObjectHideFlags: 0
