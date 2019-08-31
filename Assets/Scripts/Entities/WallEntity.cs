@@ -29,4 +29,9 @@ public class WallEntity : ICellEntity
     {
 
     }
+
+    public bool ExecuteActionEntity(ICellEntity entity)
+    {
+        return false;
+    }
 }

@@ -15,4 +15,6 @@ public interface ICellEntity {
 
     void HasFinishedMoving();
 
+    bool ExecuteActionEntity(ICellEntity entity);
+
 }

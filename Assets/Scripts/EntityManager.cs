@@ -97,7 +97,7 @@ public class EntityManager : MonoBehaviour
     public void MoveEntity(Cell oldCell, Cell newCell)
     {
         // oldcell != newCell condition in case the enemy is at the borders of the grid, so recieves same cell
-        if(oldCell != newCell)
+        if (oldCell != newCell)
         {
             entities[newCell.GetCellIndexX(), newCell.GetCellIndexY()] = entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()];
             entities[oldCell.GetCellIndexX(), oldCell.GetCellIndexY()] = null;
@@ -117,9 +117,9 @@ public class EntityManager : MonoBehaviour
         }
 
         transform.position = destination;
-        
+
         // for cell entities
-        if(cellEntity != null)
+        if (cellEntity != null)
         {
             cellEntity.HasFinishedMoving();
         }
@@ -142,13 +142,16 @@ public class EntityManager : MonoBehaviour
     // maintains list of activated enemies and at small time intervals loops through them and makes them move towards the player
     public void MoveEnemies()
     {
-        if(player.lightSwitchedOn)
+        if (player.lightSwitchedOn)
         {
             for (int i = 0; i < enemyIndex; i++)
             {
-                if (activatedEnemies[i].canBeMoved)
+                if(activatedEnemies[i] != null)
                 {
-                    activatedEnemies[i].MoveTowardsPlayer();
+                    if (activatedEnemies[i].canBeMoved)
+                    {
+                        activatedEnemies[i].MoveTowardsPlayer();
+                    }
                 }
             }
         }
@@ -160,4 +163,26 @@ public class EntityManager : MonoBehaviour
         enemyEntity.canBeMoved = true;
     }
 
+    public void DestroyEntity(ICellEntity entity, float time)
+    {
+        StartCoroutine(DestroyEntityAfter(entity, time));
+    }
+
+    IEnumerator DestroyEntityAfter(ICellEntity entity, float time)
+    {
+        yield return new WaitForSeconds(time);
+        Cell entityCell = entity.Cell;
+        entities[entityCell.GetCellIndexX(), entityCell.GetCellIndexY()] = null;
+
+        // remove from activated enemies list
+        for(int i=0;i<enemyIndex;i++)
+        {
+            if(activatedEnemies[i] == entity)
+            {
+                activatedEnemies[i] = null;
+            }
+        }
+
+        Destroy(entity.gameObject);
+    }
 }

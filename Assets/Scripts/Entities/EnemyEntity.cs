@@ -57,11 +57,28 @@ public class EnemyEntity : ICellEntity {
 
     public void MoveToCell(Cell cell)
     {
-        Moving = true;
-        entityManager.MoveEntity(Cell, cell);
-        this.Cell = cell;
-        
-        entityManager.MoveCellObject(gameObject, gameObject.transform.position, cell.getCenterPositionForEntity(), enemyMoveTime, this);
+        // check if new cell contains entity
+        ICellEntity cellEntity = entityManager.GetEntity(cell);
+
+        if(cellEntity != null)
+        {
+            if (cellEntity.ExecuteActionEntity(this))
+            {
+                Moving = true;
+                entityManager.MoveEntity(Cell, cell);
+                this.Cell = cell;
+
+                entityManager.MoveCellObject(gameObject, gameObject.transform.position, cell.getCenterPositionForEntity(), enemyMoveTime, this);
+            }
+        }
+        else
+        {
+            Moving = true;
+            entityManager.MoveEntity(Cell, cell);
+            this.Cell = cell;
+
+            entityManager.MoveCellObject(gameObject, gameObject.transform.position, cell.getCenterPositionForEntity(), enemyMoveTime, this);
+        }
     }
 
     public void HasFinishedMoving()
@@ -98,5 +115,10 @@ public class EnemyEntity : ICellEntity {
 
             MoveToCell(nextCell);
         }
+    }
+
+    public bool ExecuteActionEntity(ICellEntity entity)
+    {
+        return true;
     }
 }
