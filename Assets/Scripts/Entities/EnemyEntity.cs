@@ -16,6 +16,9 @@ public class EnemyEntity : ICellEntity {
     public Grid grid;
     public PlayerController player;
 
+    public float minCountdownBeforeMoving = 1f;
+    public bool canBeMoved = false;
+
     public EnemyEntity(Cell cell)
     {
         Cell = cell;

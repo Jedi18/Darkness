@@ -129,10 +129,13 @@ public class EntityManager : MonoBehaviour
         StartCoroutine(MoveObject(obj, source, destination, timeToMove, cellEntity));
     }
 
+    /* --------------------- Move object code finished -------------------- */
+
     public void ActivateEnemy(EnemyEntity entity)
     {
         activatedEnemies[enemyIndex] = entity;
         enemyIndex++;
+        StartCoroutine(SetCanBeMovedEnemy(entity));
     }
 
     // maintains list of activated enemies and at small time intervals loops through them and makes them move towards the player
@@ -140,9 +143,17 @@ public class EntityManager : MonoBehaviour
     {
         for(int i=0;i<enemyIndex;i++)
         {
-            activatedEnemies[i].MoveTowardsPlayer();
+            if(activatedEnemies[i].canBeMoved)
+            {
+                activatedEnemies[i].MoveTowardsPlayer();
+            }
         }
     }
 
-    /* --------------------- Move object code finished -------------------- */
+    IEnumerator SetCanBeMovedEnemy(EnemyEntity enemyEntity)
+    {
+        yield return new WaitForSeconds(enemyEntity.minCountdownBeforeMoving);
+        enemyEntity.canBeMoved = true;
+    }
+
 }
