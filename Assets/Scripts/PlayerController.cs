@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public EntityManager entityManager;
     public EntityGenerator entityGenerator;
     public CameraController cameraController;
+    public GameState gameState;
 
     public float playerMoveTime;
 
@@ -25,8 +26,12 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        HandlePlayerInput();
-        CellRelativeToPlayerHighlighting();
+        
+        if(gameState.PlayerAlive)
+        {
+            HandlePlayerInput();
+            CellRelativeToPlayerHighlighting();
+        }
     }
 
     private void HandlePlayerInput()

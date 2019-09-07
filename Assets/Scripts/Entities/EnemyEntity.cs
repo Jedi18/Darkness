@@ -33,6 +33,7 @@ public class EnemyEntity : ICellEntity {
 
 	public bool ExecuteAction()
     {
+        entityManager.gameState.PlayerAlive = false;
         return true;
     }
 
@@ -73,6 +74,12 @@ public class EnemyEntity : ICellEntity {
         }
         else
         {
+            // to call enemy's action if enemy moves into the player (otherwise it will only destroy player if he moves into the enemy
+            if (cell == player.GetCurrentCell())
+            {
+                this.ExecuteAction();
+            }
+
             Moving = true;
             entityManager.MoveEntity(Cell, cell);
             this.Cell = cell;

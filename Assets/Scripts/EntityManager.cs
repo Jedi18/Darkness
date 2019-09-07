@@ -12,6 +12,7 @@ public class EntityManager : MonoBehaviour
     public Grid grid;
     public EntityGenerator entityGenerator;
     public PlayerController player;
+    public GameState gameState;
 
     public EnemyEntity[] activatedEnemies;
     int enemyIndex = 0;
@@ -142,7 +143,7 @@ public class EntityManager : MonoBehaviour
     // maintains list of activated enemies and at small time intervals loops through them and makes them move towards the player
     public void MoveEnemies()
     {
-        if (player.lightSwitchedOn)
+        if (player.lightSwitchedOn && gameState.PlayerAlive)
         {
             for (int i = 0; i < enemyIndex; i++)
             {

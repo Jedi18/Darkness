@@ -20,6 +20,7 @@ public class TrapEntity : ICellEntity {
 
     public bool ExecuteAction()
     {
+        entityManager.gameState.PlayerAlive = false;
         return true;
     }
 

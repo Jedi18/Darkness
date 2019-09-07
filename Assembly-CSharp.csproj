@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Entities\WallEntity.cs" />
      <Compile Include="Assets\Scripts\EntityGenerator.cs" />
      <Compile Include="Assets\Scripts\EntityManager.cs" />
+     <Compile Include="Assets\Scripts\GameState.cs" />
      <Compile Include="Assets\Scripts\Grid.cs" />
      <Compile Include="Assets\Scripts\ICellEntity.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
